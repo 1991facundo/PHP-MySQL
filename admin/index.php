@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Disidentxs</title>
+  <title>Ecommerce</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -24,7 +24,7 @@
 
   <div class="login-box">
     <div class="login-logo">
-      <b>Disidentxs</b>
+      <b>Ecommerce</b>
       <p>Rebel Coffe & Books</p>
     </div>
     <!-- /.login-logo -->
