@@ -130,7 +130,7 @@ $module = $_REQUEST['module'] ?? ''
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="panel.php?module=users" class="nav-link <?php echo ($module == "users" || $module == "createUser" ) ? "active"  : " "; ?>">
+                  <a href="panel.php?module=users" class="nav-link <?php echo ($module == "users" || $module == "createUser") ? "active"  : " "; ?>">
                     <i class="far fa-user nav-icon"></i>
                     <p>Users</p>
                   </a>
@@ -162,6 +162,18 @@ $module = $_REQUEST['module'] ?? ''
 
     <?php
 
+    if (isset($_REQUEST['message'])) {
+    ?>
+      <div class="alert alert-primary alert-dismissible fade show float-right" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          <span class="sr-only">Close</span>
+        </button>
+        <?php echo $_REQUEST['message'] ?>
+      </div>
+    <?php
+    }
+
     if ($module == "statistics" || $module == "") {
       include_once "statistics.php";
     }
@@ -175,7 +187,7 @@ $module = $_REQUEST['module'] ?? ''
       include_once "products.php";
     }
 
-    if($module=="createUser"){
+    if ($module == "createUser") {
       include_once "createUser.php";
     }
 
@@ -235,7 +247,7 @@ $module = $_REQUEST['module'] ?? ''
 
   <script>
     $(function() {
-      
+
       $('#example2').DataTable({
         "paging": true,
         "lengthChange": false,

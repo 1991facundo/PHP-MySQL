@@ -1,28 +1,30 @@
 <?php
 if (isset($_REQUEST['save'])) {
-    include_once "db_ecommerce.php";
+    include_once "dbEcommerce.php";
     $con = mysqli_connect($host, $user, $dbPassword, $db);
 
     $email = mysqli_real_escape_string($con, $_REQUEST['email'] ?? '');
-    $pass = md5(mysqli_real_escape_string($con, $_REQUEST['password'] ?? ''));
-    $nombre = mysqli_real_escape_string($con, $_REQUEST['name'] ?? '');
+    $password = md5(mysqli_real_escape_string($con, $_REQUEST['password'] ?? ''));
+    $name = mysqli_real_escape_string($con, $_REQUEST['name'] ?? '');
 
     $query = "INSERT INTO users 
-        (email       ,password       ,name) VALUES
+        (email, password, name) VALUES
         ('" . $email . "','" . $password . "','" . $name . "');
-        ";
+    ";
     $res = mysqli_query($con, $query);
     if ($res) {
-        echo '<meta http-equiv="refresh" content="0; url=panel.php?module=users&message=user created successfully" />  ';
+
+        echo
+        '<meta http-equiv="refresh" content="0; url=panel.php?module=users&message=User created successfully" />  ';
     } else {
-?>
-        <div class="alert alert-danger" role="alert">
-            Error creating user <?php echo mysqli_error($con); ?>
-        </div>
-<?php
+        echo '<div class="alert alert-danger" role="alert">
+                Error creating user ' . mysqli_error($con) . '
+              </div>';
     }
 }
 ?>
+
+
 
 
 
