@@ -130,7 +130,7 @@ $module = $_REQUEST['module'] ?? ''
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="panel.php?module=users" class="nav-link <?php echo ($module == "users") ? "active"  : " "; ?>">
+                  <a href="panel.php?module=users" class="nav-link <?php echo ($module == "users" || $module == "createUser" ) ? "active"  : " "; ?>">
                     <i class="far fa-user nav-icon"></i>
                     <p>Users</p>
                   </a>
@@ -173,6 +173,10 @@ $module = $_REQUEST['module'] ?? ''
     }
     if ($module == "products") {
       include_once "products.php";
+    }
+
+    if($module=="createUser"){
+      include_once "createUser.php";
     }
 
     ?>
