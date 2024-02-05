@@ -75,7 +75,7 @@ $module = $_REQUEST['module'] ?? ''
 
         <!-- Messages Dropdown Menu -->
 
-        <a class="nav-link" href="editProfile.php">
+        <a class="nav-link" href="panel.php?module=editUser&id=<?php echo $_SESSION['id']; ?>">
           <i class="far fa-user"></i>
         </a>
 
@@ -191,7 +191,7 @@ $module = $_REQUEST['module'] ?? ''
       include_once "createUser.php";
     }
 
-    if ($module=="editUser"){
+    if ($module == "editUser") {
       include_once "editUser.php";
     }
 
@@ -263,6 +263,24 @@ $module = $_REQUEST['module'] ?? ''
       });
     });
   </script>
+
+
+  <script>
+
+    $(document).ready(function() {
+    $(".delete").click(function(e) {
+    e.preventDefault();
+    var res = confirm("Please confirm you want to delete this user");
+    if (res == true) {
+    var link = $(this).attr("href");
+    window.location = link;
+    }
+
+    });
+    });
+
+    </script>
+
 </body>
 
 </html>

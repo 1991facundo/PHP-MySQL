@@ -1,34 +1,37 @@
 <?php
-if (isset($_REQUEST['save'])) {
-    include_once "dbEcommerce.php";
-    $con = mysqli_connect($host, $user, $dbPassword, $db);
+include_once "dbEcommerce.php";
+$con = mysqli_connect($host, $user, $dbPassword, $db);
 
+if (isset($_REQUEST['save'])) {
+    
     $email = mysqli_real_escape_string($con, $_REQUEST['email'] ?? '');
     $password = md5(mysqli_real_escape_string($con, $_REQUEST['password'] ?? ''));
     $name = mysqli_real_escape_string($con, $_REQUEST['name'] ?? '');
+    $id = mysqli_real_escape_string($con, $_REQUEST['id'] ?? '');
 
-    $query = "INSERT INTO users 
-        (email, password, name) VALUES
-        ('" . $email . "','" . $password . "','" . $name . "');
-    ";
+    $query = "UPDATE users SET
+        email='" . $email . "', password= '" . $password . "',name='" . $name . "' where id='" . $id . "';
+        ";
     $res = mysqli_query($con, $query);
     if ($res) {
 
         echo
-        '<meta http-equiv="refresh" content="0; url=panel.php?module=users&message=User created successfully" />  ';
+        '<meta http-equiv="refresh" content="0; url=panel.php?module=users&message=User ' . $name . ' edited successfully" />  ';
     } else {
         echo '<div class="alert alert-danger" role="alert">
                 Error creating user ' . mysqli_error($con) . '
               </div>';
     }
 }
-
-
 ?>
 
+<?php
+$id = mysqli_real_escape_string($con, $_REQUEST['id'] ?? '');
+$query = "SELECT id,email,password,name from users where id='" . $id . "'; ";
+$res = mysqli_query($con, $query);
+$row = mysqli_fetch_assoc($res);
 
-
-
+?>
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -51,10 +54,10 @@ if (isset($_REQUEST['save'])) {
 
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <form action="panel.php?module=createUser" method="post">
+                            <form action="panel.php?module=editUser" method="post">
                                 <div class="form-group">
                                     <label for="">Email</label>
-                                    <input type="email" name="email" id="" class="form-control" placeholder="name@email.com" alt="email">
+                                    <input type="email" name="email" id="" class="form-control" value="<?php echo $row['email'] ?>" required="required" placeholder="name@email.com" alt="email">
                                 </div>
                                 <div class="form-group">
                                     <label for="">Password</label>
@@ -62,9 +65,10 @@ if (isset($_REQUEST['save'])) {
                                 </div>
                                 <div class="form-group">
                                     <label for="">Full Name</label>
-                                    <input type="text" name="name" class="form-control" placeholder="full name" alt="name">
+                                    <input type="text" name="name" class="form-control" value="<?php echo $row['name'] ?>" required="required" placeholder="full name" alt="name">
                                 </div>
                                 <div class="form-group">
+                                    <input type="hidden" name="id" value="<?php echo $row['id'] ?>">
                                     <button type="submit" class="btn btn-primary" name="save">Create</button>
                                 </div>
                             </form>

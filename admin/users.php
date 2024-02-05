@@ -1,3 +1,34 @@
+<?php
+
+include_once "dbEcommerce.php";
+$con = mysqli_connect($host, $user, $dbPassword, $db);
+
+if (isset($_REQUEST['idDelete'])) {
+
+    $id = mysqli_real_escape_string($con, $_REQUEST['idDelete'] ?? '');
+    $query = "DELETE FROM users WHERE id = '" . $id . "';";
+    $res = mysqli_query($con, $query);
+    if ($res) {
+?>
+
+        <div class="alert alert-warning float-right" role="alert">
+            User deleted successfully
+        </div>
+
+    <?php
+    } else {
+    ?>
+        <div class="alert alert-danger float-right" role="alert">
+            Error deleting user <?php echo mysqli_error($con); ?>
+        </div>
+<?php
+    }
+}
+?>
+
+
+
+
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -33,8 +64,7 @@
 
                                     <?php
 
-                                    include_once "dbEcommerce.php";
-                                    $con = mysqli_connect($host, $user, $dbPassword, $db);
+
                                     $query = "SELECT id, email, name from users; ";
                                     $res = mysqli_query($con, $query);
 
@@ -45,7 +75,7 @@
                                             <td><?php echo $row['email'] ?></td>
                                             <td>
                                                 <a href="panel.php?module=editUser&id=<?php echo $row['id'] ?>" style="margin-right: 5px;"> <i class="fas fa-edit"></i> </a>
-                                                <a href="users.php?idDelete=<?php echo $row['id'] ?>" class="text-danger"> <i class="fas fa-trash"></i> </a>
+                                                <a href="panel.php?module=users&idDelete=<?php echo $row['id'] ?>" class="text-danger delete"> <i class="fas fa-trash"></i> </a>
                                             </td>
                                         </tr>
                                     <?php
