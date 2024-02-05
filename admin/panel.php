@@ -4,6 +4,7 @@
 <?php
 
 session_start();
+session_regenerate_id(true);
 if (isset($_REQUEST['session']) && $_REQUEST['session'] == "close") {
   session_destroy();
   header("location: index.php");
@@ -201,6 +202,8 @@ $module = $_REQUEST['module'] ?? ''
       include_once "editUser.php";
     }
 
+    if($module=="products")
+    include_once "products.php";
     ?>
 
 
