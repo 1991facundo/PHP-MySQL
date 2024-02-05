@@ -4,6 +4,11 @@
 <?php
 
 session_start();
+if (isset($_REQUEST['session']) && $_REQUEST['session'] == "close") {
+  session_destroy();
+  header("location: index.php");
+}
+
 if (isset($_SESSION['id']) == false) {
   header("location: index.php");
 }
@@ -78,7 +83,8 @@ $module = $_REQUEST['module'] ?? ''
         <a class="nav-link" href="panel.php?module=editUser&id=<?php echo $_SESSION['id']; ?>">
           <i class="far fa-user"></i>
         </a>
-
+        <a class="nav-link text-danger" href="panel.php?module=&session=close" title="Log Out">
+          <i class="fas fa-door-closed    "></i>
       </ul>
     </nav>
 
@@ -266,20 +272,18 @@ $module = $_REQUEST['module'] ?? ''
 
 
   <script>
-
     $(document).ready(function() {
-    $(".delete").click(function(e) {
-    e.preventDefault();
-    var res = confirm("Please confirm you want to delete this user");
-    if (res == true) {
-    var link = $(this).attr("href");
-    window.location = link;
-    }
+      $(".delete").click(function(e) {
+        e.preventDefault();
+        var res = confirm("Please confirm you want to delete this user");
+        if (res == true) {
+          var link = $(this).attr("href");
+          window.location = link;
+        }
 
+      });
     });
-    });
-
-    </script>
+  </script>
 
 </body>
 
