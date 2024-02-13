@@ -252,9 +252,9 @@ $module = $_REQUEST['module'] ?? ''
   <script src="dist/js/pages/dashboard.js"></script>
   <!-- DataTables  & Plugins -->
   <script src="plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
   <!-- <script src="plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
   <script src="plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-  <script src="plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
   <script src="plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
   <script src="plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
   <script src="plugins/jszip/jszip.min.js"></script>
@@ -278,6 +278,71 @@ $module = $_REQUEST['module'] ?? ''
         "info": true,
         "autoWidth": false,
         "responsive": true,
+      });
+
+      const editor = new DataTable.Editor({
+        ajax: 'controllers/products.php',
+        table: '#tableProducts',
+        fields: [{
+            label: 'Name:',
+            name: 'name'
+          },
+          {
+            label: 'Price:',
+            name: 'price'
+          },
+          {
+            label: 'Quantity:',
+            name: 'quantity'
+          },
+          {
+            label: 'Images:',
+            name: 'files[].id',
+            type: 'uploadMany',
+            display: (fileId, counter) => `<img src="${editor.file('files', fileId).web_path}"/>`,
+            noFileText: 'No images'
+          }
+        ],
+
+      });
+
+      new DataTable('#tableProducts', {
+        dom: 'Bfrtip',
+        ajax: 'controllers/products.php',
+
+        columns: [{
+            data: 'name'
+          },
+          {
+            data: 'price',
+            render: DataTable.render.number(',', '.', 0, '$')
+          },
+          {
+            data: 'quantity'
+          },
+          {
+            data: 'files',
+            render: d => d.length ? `${d.length} image(s)` : 'No image',
+            title: 'Image'
+          },
+
+        ],
+        select: true,
+        buttons: [{
+            extend: 'create',
+            editor
+          },
+          {
+            extend: 'edit',
+            editor
+          },
+          {
+            extend: 'remove',
+            editor
+          }
+        ],
+
+
       });
     });
   </script>

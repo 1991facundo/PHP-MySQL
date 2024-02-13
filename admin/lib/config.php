@@ -10,16 +10,18 @@ if (!defined('DATATABLES')) {
 error_reporting(\E_ALL);
 ini_set('display_errors', '1');
 
+
+include_once "../dbEcommerce.php";
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Database user / pass
  */
 $sql_details = array(
 	'type' => 'Mysql',     // Database type: "Mysql", "Postgres", "Sqlserver", "Sqlite" or "Oracle"
-	'user' => '',          // Database user name
-	'pass' => '',          // Database password
-	'host' => '', // Database host
+	'user' => $user,          // Database user name
+	'pass' => $dbPassword,          // Database password
+	'host' => $host, // Database host
 	'port' => '',          // Database connection port (can be left empty for default)
-	'db' => '',          // Database name
+	'db' => $db,          // Database name
 	'dsn' => '',          // PHP DSN extra information. Set as `charset=utf8mb4` if you are using MySQL
 	'pdoAttr' => array(),   // PHP PDO attributes array. See the PHP documentation for all options
 );
