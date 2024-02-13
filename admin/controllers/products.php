@@ -34,27 +34,27 @@ Editor::inst($db, 'products')
 			->setFormatter(Format::ifEmpty(null)),
 	)
 
-->join(
-	Mjoin::inst('files')
-	->link('users.id', 'users_files.user_id')
-	->link('files.id', 'users_files.file_id')
-	->fields(
-		Field::inst('id')
-		->upload(
-			Upload::inst($_SERVER['DOCUMENT_ROOT'] . '/uploads/__ID__.__EXTN__')
-			->db('files', 'id', array(
-				'filename'    => Upload::DB_FILE_NAME,
-				'filesize'    => Upload::DB_FILE_SIZE,
-				'web_path'    => Upload::DB_WEB_PATH,
-				'system_path' => Upload::DB_SYSTEM_PATH
-			))
-			->validator(Validate::fileSize(500000, 'Files must be smaller that 500K'))
-			->validator(Validate::fileExtensions(array(
-				'png', 'jpg', 'jpeg', 'gif'
-			), "Please upload an image"))
-		)
+	->join(
+		Mjoin::inst('files')
+			->link('products.id', 'products_files.product_id')
+			->link('files.id', 'products_files.file_id')
+			->fields(
+				Field::inst('id')
+					->upload(
+						Upload::inst($_SERVER['DOCUMENT_ROOT'] . '/ecommerce-PHP-MySQL/upload/__ID__.__EXTN__')
+							->db('files', 'id', array(
+								'filename'    => Upload::DB_FILE_NAME,
+								'filesize'    => Upload::DB_FILE_SIZE,
+								'web_path'    => Upload::DB_WEB_PATH,
+								'system_path' => Upload::DB_SYSTEM_PATH
+							))
+							->validator(Validate::fileSize(5000000, 'Files must be smaller that 5M'))
+							->validator(Validate::fileExtensions(array(
+								'png', 'jpg', 'jpeg', 'gif'
+							), "Please upload an image"))
+					)
+			)
 	)
-)
 	->debug(true)
 	->process($_POST)
 	->json();
