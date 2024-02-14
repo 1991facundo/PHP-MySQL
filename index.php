@@ -36,9 +36,10 @@
                         </li>
                     </ul>
                     <!-- SEARCH FORM -->
-                    <form class="form-inline ml-3">
-                        <div class="input-group input-group-sm">
-                            <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                    <form class="form-inline ml-3" action="index.php">
+                        <div class=" input-group input-group-sm">
+                            <input class="form-control form-control-navbar bg-gray" type="search" placeholder="Search" aria-label="Search" name="name" value="<?php echo $_REQUEST['name'] ?? ''; ?>">
+                            <input type="hidden" name="module" value="products">
                             <div class="input-group-append">
                                 <button class="btn btn-navbar" type="submit">
                                     <i class="fas fa-search"></i>
@@ -134,11 +135,33 @@
                         </li>
                     </ul>
                 </nav>
-
                 <div class="row mt-1">
                     <?php
-                    include_once "admin/dbEcommerce.php";
+                    include_once "admin/dbecommerce.php";
                     $con = mysqli_connect($host, $user, $dbPassword, $db);
+                    $where = " WHERE 1=1";
+                    $name = mysqli_real_escape_string($con, $_REQUEST['name'] ?? '');
+                    if (!empty($name)) {
+                        $where .= " AND name LIKE '%" . $name . "%'";
+                    }
+                    $queryAcc = "SELECT COUNT(*) as Acc FROM products  $where ;";
+                    $resAcc = mysqli_query($con, $queryAcc);
+                    $rowAcc = mysqli_fetch_assoc($resAcc);
+                    $totalRegs = $rowAcc['Acc'];
+
+                    $elementsPage = 6;
+
+                    $totalPages = ceil($totalRegs / $elementsPage);
+
+                    $pageSel = $_REQUEST['page'] ?? false;
+
+                    if ($pageSel == false) {
+                        $initLimit = 0;
+                        $pageSel = 1;
+                    } else {
+                        $initLimit = ($pageSel - 1) * $elementsPage;
+                    }
+                    $limit = " limit $initLimit,$elementsPage ";
                     $query = "SELECT 
                         p.id,
                         p.name,
@@ -149,7 +172,9 @@
                         products AS p
                         INNER JOIN products_files AS pf ON pf.product_id=p.id
                         INNER JOIN files AS f ON f.id=pf.file_id
+                        $where
                         GROUP BY p.id
+                        $limit
                         ";
                     $res = mysqli_query($con, $query);
                     while ($row = mysqli_fetch_assoc($res)) {
@@ -169,6 +194,37 @@
                     }
                     ?>
                 </div>
+
+                <?php if ($totalPages > 0) : ?>
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            <?php
+                            $urlParams = '&name=' . urlencode($name);
+                            if ($pageSel > 1) : ?>
+                                <li class="page-item">
+                                    <a class="page-link" href="index.php?module=products&page=<?= ($pageSel - 1) . $urlParams; ?>" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                            <?php endif;
+                            for ($i = 1; $i <= $totalPages; $i++) : ?>
+                                <li class="page-item <?= ($pageSel == $i) ? 'active' : ''; ?>">
+                                    <a class="page-link" href="index.php?module=products&page=<?= $i . $urlParams; ?>"><?= $i; ?></a>
+                                </li>
+                            <?php endfor;
+                            if ($pageSel < $totalPages) : ?>
+                                <li class="page-item">
+                                    <a class="page-link" href="index.php?module=products&page=<?= ($pageSel + 1) . $urlParams; ?>" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            <?php endif; ?>
+                        </ul>
+                    </nav>
+                <?php endif; ?>
+
+
+
             </div>
         </div>
     </div>
