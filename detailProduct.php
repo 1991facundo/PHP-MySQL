@@ -34,7 +34,7 @@ $fmt = new NumberFormatter('es_ES', NumberFormatter::CURRENCY);
                     while ($rowImages = mysqli_fetch_assoc($resImages)) {
                     ?>
 
-                        <div class="product-image-thumb"><img src="<?php echo $rowImagenes['web_path'] ?>"></div>
+                        <div class="product-image-thumb"><img src="<?php echo $rowImages['web_path'] ?>"></div>
                     <?php
                     }
                     ?>

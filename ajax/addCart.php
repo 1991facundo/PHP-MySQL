@@ -9,7 +9,7 @@ foreach ($products as $key => $value) {
     }
 }
 if ($alreadyProd == false) {
-    $nuevo = array(
+    $new = array(
         "id" => $_REQUEST['id'],
         "name" => $_REQUEST['name'],
         "web_path" => $_REQUEST['web_path'],
