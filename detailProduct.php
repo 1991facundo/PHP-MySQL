@@ -12,7 +12,7 @@ $fmt = new NumberFormatter('es_ES', NumberFormatter::CURRENCY);
     <div class="card-body">
         <div class="row">
             <div class="col-12 col-sm-6">
-                <h3 class="d-inline-block d-sm-none"><?php echo $rowProducto['name'] ?></h3>
+                <h3 class="d-inline-block d-sm-none"><?php echo $rowProduct['name'] ?></h3>
                 <?php
                 $queryImages = "SELECT 
                 f.web_path
@@ -58,14 +58,14 @@ $fmt = new NumberFormatter('es_ES', NumberFormatter::CURRENCY);
 
                 </div>
                 <div class="mt-4">
-                    <button class="btn btn-primary btn-lg btn-flat" id="addCart" data-id="<?php echo $_REQUEST['id'] ?>" data-name="<?php echo $rowProduct['name'] ?>" data-web_path="<?php echo $rowFirstImg['web_path'] ?>">
+                    <button class="btn btn-primary btn-lg btn-flat" id="addCart" data-id="<?php echo $_REQUEST['id'] ?>" data-name="<?php echo $rowProduct['name'] ?>" data-web_path="<?php echo $rowFirstImg['web_path'] ?>" data-price="<?php echo $rowProduct['price'] ?>">
                         <i class="fas fa-cart-plus fa-lg mr-2"></i>
                         Add to Cart
                     </button>
                 </div>
 
                 <div class="mt-4">
-                    Quantity<input type="number" class="form-control" id="prodQuantity" value="1">
+                    Quantity<input type="number" class="form-control" id="quantity" value="1">
                 </div>
 
             </div>

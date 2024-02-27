@@ -13,7 +13,8 @@ if ($alreadyProd == false) {
         "id" => $_REQUEST['id'],
         "name" => $_REQUEST['name'],
         "web_path" => $_REQUEST['web_path'],
-        "quantity" => $_REQUEST['quantity']
+        "quantity" => $_REQUEST['quantity'],
+        "price" => $_REQUEST['price']
     );
     array_push($products, $new);
 }

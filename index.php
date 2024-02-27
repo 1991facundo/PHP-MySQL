@@ -99,6 +99,10 @@
                 if ($module == "detailProduct") {
                     include_once "detailProduct.php";
                 }
+                if ($module == "cart") {
+                    include_once "cart.php";
+                }
+
                 ?>
             </div>
         </div>

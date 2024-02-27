@@ -10,17 +10,56 @@ $(document).ready(function () {
     },
   });
 
+ $.ajax({
+   type: "post",
+   url: "ajax/readCart.php",
+   dataType: "json",
+   success: function (response) {
+     fillTableCart(response);
+   },
+ });
+ function fillTableCart(response) {
+   var TOTAL = 0;
+   response.forEach((element) => {
+     var totalProd = element["quantity"] * element["price"];
+     TOTAL = TOTAL + totalProd;
+     $("#tableCart").append(
+       `
+                <tr>
+                    <td><img src="${element["web_path"]}" class="img-size-50"/></td>
+                    <td>${element["name"]}</td>
+                    <td>${element["quantity"]}</td>
+                    <td>${element["price"]}</td>
+                    <td>${totalProd}</td>
+                    <td><i class="fa fa-trash text-danger"></i></td>
+                <tr>
+                `
+     );
+   });
+   $("#tableCart").append(
+     `
+            <tr>
+                <td colspan="4" class="text-right"><strong>Total:</strong></td>
+                <td>${TOTAL}</td>
+                <td></td>
+            <tr>
+            `
+   );
+ }
+
+
   // ADD TO CART
   $("#addCart").click(function (e) {
     e.preventDefault();
     var id = $(this).data("id");
     var name = $(this).data("name");
     var web_path = $(this).data("web_path");
-    var prodQuantity = $("#prodQuantity").val();
+    var quantity = $("#quantity").val();
+    var price = $(this).data('price')
     $.ajax({
       type: "POST",
       url: "ajax/addCart.php",
-      data: { id: id, name: name, web_path: web_path, quantity: prodQuantity },
+      data: { id: id, name: name, web_path: web_path, quantity: quantity, price: price},
       dataType: "json",
       success: function (response) {
         fillCart(response);
@@ -58,7 +97,7 @@ $(document).ready(function () {
                 ${element.name}
                 <span class="float-right text-sm text-primary"><i class="fas fa-eye"></i></span>
               </h3>
-              <p class="text-sm">Cantidad ${element.quantity}</p>
+              <p class="text-sm">Quantity ${element.quantity}</p>
             </div>
           </div>
         </a>
@@ -66,7 +105,14 @@ $(document).ready(function () {
       );
     });
     $("#listCart").append(
-      `<a href="#" class="dropdown-item dropdown-footer text-danger" id="deleteCart">
+      `
+      <a href="index.php?module=cart" class="dropdown-item dropdown-footer text-primary">
+                See Cart 
+                <i class="fa fa-cart-plus"></i>
+            </a>
+            <div class="dropdown-divider"></div>
+
+      <a href="#" class="dropdown-item dropdown-footer text-danger" id="deleteCart">
         Delete Cart 
         <i class="fa fa-trash"></i>
       </a>`
