@@ -10,43 +10,88 @@ $(document).ready(function () {
     },
   });
 
- $.ajax({
-   type: "post",
-   url: "ajax/readCart.php",
-   dataType: "json",
-   success: function (response) {
-     fillTableCart(response);
-   },
- });
- function fillTableCart(response) {
-   var TOTAL = 0;
-   response.forEach((element) => {
-     var totalProd = element["quantity"] * element["price"];
-     TOTAL = TOTAL + totalProd;
-     $("#tableCart").append(
-       `
+  $.ajax({
+    type: "post",
+    url: "ajax/readCart.php",
+    dataType: "json",
+    success: function (response) {
+      fillTableCart(response);
+    },
+  });
+  function fillTableCart(response) {
+    $("#tableCart tbody").text("");
+    var TOTAL = 0;
+    response.forEach((element) => {
+       var price = parseFloat(element["price"]);
+       var totalProd = element["quantity"] * price;
+      TOTAL = TOTAL + totalProd;
+      $("#tableCart tbody").append(
+        `
                 <tr>
-                    <td><img src="${element["web_path"]}" class="img-size-50"/></td>
+                    <td><img src="${
+                      element["web_path"]
+                    }" class="img-size-50"/></td>
                     <td>${element["name"]}</td>
-                    <td>${element["quantity"]}</td>
-                    <td>${element["price"]}</td>
-                    <td>${totalProd}</td>
-                    <td><i class="fa fa-trash text-danger"></i></td>
+                   <td>
+                        ${element["quantity"]}
+                        <button type="button" class="btn-xs btn-primary plus" 
+                        data-id="${element["id"]}"
+                        data-type="plus"
+                        >+</button>
+                        <button type="button" class="btn-xs btn-danger minus" 
+                        data-id="${element["id"]}"
+                        data-type="minus"
+                        >-</button>
+                    </td>
+                    <td>$${price.toFixed(2)}</td>
+                    <td>$${totalProd.toFixed(2)}</td>
+                    <td><i class="fa fa-trash text-danger deleteProduct" data-id="${
+                      element["id"]
+                    }" ></i></td>
                 <tr>
                 `
-     );
-   });
-   $("#tableCart").append(
-     `
+      );
+    });
+    $("#tableCart tbody").append(
+      `
             <tr>
                 <td colspan="4" class="text-right"><strong>Total:</strong></td>
-                <td>${TOTAL}</td>
+                <td>${TOTAL.toFixed(2)}</td>
                 <td></td>
             <tr>
             `
-   );
- }
+    );
+  }
 
+      $(document).on("click", ".plus,.minus", function (e) {
+        e.preventDefault();
+        var id = $(this).data("id");
+        var type = $(this).data("type");
+        $.ajax({
+          type: "post",
+          url: "ajax/changeProdQuantity.php",
+          data: { id: id, type: type },
+          dataType: "json",
+          success: function (response) {
+            fillTableCart(response);
+            fillCart(response);
+          },
+        });
+      });
+      $(document).on("click", ".deleteProduct", function (e) {
+        e.preventDefault();
+        var id = $(this).data("id");
+        $.ajax({
+          type: "post",
+          url: "ajax/deleteProdCart.php",
+          data: { id: id },
+          dataType: "json",
+          success: function (response) {
+            fillTableCart(response);
+            fillCart(response);
+          },
+        });
+      });
 
   // ADD TO CART
   $("#addCart").click(function (e) {
@@ -55,11 +100,17 @@ $(document).ready(function () {
     var name = $(this).data("name");
     var web_path = $(this).data("web_path");
     var quantity = $("#quantity").val();
-    var price = $(this).data('price')
+    var price = $(this).data("price");
     $.ajax({
       type: "POST",
       url: "ajax/addCart.php",
-      data: { id: id, name: name, web_path: web_path, quantity: quantity, price: price},
+      data: {
+        id: id,
+        name: name,
+        web_path: web_path,
+        quantity: quantity,
+        price: price,
+      },
       dataType: "json",
       success: function (response) {
         fillCart(response);
@@ -86,7 +137,7 @@ $(document).ready(function () {
     } else {
       $("#badgeProduct").text("");
     }
-    $("#listCart").empty(); 
+    $("#listCart").empty();
     response.forEach(function (element) {
       $("#listCart").append(
         `<a href="index.php?module=detailProduct&id=${element.id}" class="dropdown-item">
