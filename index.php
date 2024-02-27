@@ -55,7 +55,7 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Messages Dropdown Menu -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link" data-toggle="dropdown" href="#" id="iconCarrito >
+                            <a class="nav-link fa fa-shopping-cart" data-toggle="dropdown" href="#" id="iconCart >
                                 <i class=" fa fa-cart-plus" aria-hidden="true"></i>
                                 <span class="badge badge-danger navbar-badge" id="badgeProduct"></span>
                             </a>

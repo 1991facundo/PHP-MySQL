@@ -1,4 +1,4 @@
 <?php
-$productos = unserialize($_COOKIE['products'] ?? '');
+$products = unserialize($_COOKIE['products'] ?? '');
 echo json_encode($products);
 ?>

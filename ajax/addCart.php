@@ -4,7 +4,7 @@ if (is_array($products) == false) $products = array();
 $alreadyProd = false;
 foreach ($products as $key => $value) {
     if ($value['id'] == $_REQUEST['id']) {
-        $productos[$key]['quantity'] = $products[$key]['quantity'] + $_REQUEST['quantity'];
+        $products[$key]['quantity'] = $products[$key]['quantity'] + $_REQUEST['quantity'];
         $alreadyProd = true;
     }
 }

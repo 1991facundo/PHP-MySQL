@@ -58,7 +58,7 @@ $fmt = new NumberFormatter('es_ES', NumberFormatter::CURRENCY);
 
                 </div>
                 <div class="mt-4">
-                    <button class="btn btn-primary btn-lg btn-flat" id="addCart" data-id="<?php echo $_REQUEST['id'] ?>" data-nombre="<?php echo $rowProduct['name'] ?>" data-web_path="<?php echo $rowFirstImg['web_path'] ?>">
+                    <button class="btn btn-primary btn-lg btn-flat" id="addCart" data-id="<?php echo $_REQUEST['id'] ?>" data-name="<?php echo $rowProduct['name'] ?>" data-web_path="<?php echo $rowFirstImg['web_path'] ?>">
                         <i class="fas fa-cart-plus fa-lg mr-2"></i>
                         Add to Cart
                     </button>

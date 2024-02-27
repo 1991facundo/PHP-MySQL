@@ -47,7 +47,7 @@ $(document).ready(function () {
     } else {
       $("#badgeProduct").text("");
     }
-    $("#listCart").empty(); // Corregido de .text("") a .empty()
+    $("#listCart").empty(); 
     response.forEach(function (element) {
       $("#listCart").append(
         `<a href="index.php?module=detailProduct&id=${element.id}" class="dropdown-item">
