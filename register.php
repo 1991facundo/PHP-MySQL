@@ -28,33 +28,42 @@
         <!-- /.login-logo -->
         <div class="card">
             <div class="card-body login-card-body">
-                <p class="login-box-msg">Login</p>
+                <p class="login-box-msg">Register</p>
                 <?php
-                if (isset($_REQUEST['login'])) {
+                if (isset($_REQUEST['register'])) {
                     session_start();
                     $email = $_REQUEST['email'] ?? '';
+                    $name = $_REQUEST['name'] ?? '';
                     $password = $_REQUEST['password'] ?? '';
                     $password = md5($password);
                     include_once "admin/dbEcommerce.php";
                     $con = mysqli_connect($host, $user, $dbPassword, $db);
-                    $query = "SELECT id,email,name from clients where email='" . $email . "' and password='" . $password . "';  ";
+                    $query = "INSERT into clients (name,email,password) values ('$name','$email','$password')";
                     $res = mysqli_query($con, $query);
-                    $row = mysqli_fetch_assoc($res);
-                    if ($row) {
-                        $_SESSION['idClient'] = $row['id'];
-                        $_SESSION['emailClient'] = $row['email'];
-                        $_SESSION['nameClient'] = $row['name'];
-                        header("location: index.php?message=User created successfully");
-                    } else {
+                    if ($res) {
                 ?>
+                        <div class="alert alert-primary" role="alert">
+                            <strong>Successfully!</strong> <a href="login.php">Go to Login</a>
+                        </div>
+                    <?php
+                    } else {
+                    ?>
                         <div class="alert alert-danger" role="alert">
-                            Login Error <img src="admin/images/haha.jpg" width="200">
+                            Error during registration
                         </div>
                 <?php
                     }
                 }
                 ?>
                 <form method="post">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Name" name="name">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user"></span>
+                            </div>
+                        </div>
+                    </div>
                     <div class="input-group mb-3">
                         <input type="email" class="form-control" placeholder="Email" name="email">
                         <div class="input-group-append">
@@ -74,8 +83,8 @@
                     <div class="row">
                         <!-- /.col -->
                         <div class="col-12">
-                            <button type="submit" class="btn btn-primary" name="login">Login</button>
-                            <a href="register.php" class="text-success float-right">Register</a>
+                            <button type="submit" class="btn btn-primary" name="register">Register</button>
+                            <a href="login.php" class="text-success float-right">Go to Log in</a>
                         </div>
                         <!-- /.col -->
                     </div>

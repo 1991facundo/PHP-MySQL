@@ -58,7 +58,7 @@
                                         <i class="fas fa-user text-primary mr-2"></i>Hi  <?php echo $_SESSION['nameClient']; ?>
                                     </a>
                                     <form action="index.php" method="post">
-                                        <button name="action" class="btn btn-danger dropdown-item" type="submit" value="logout">
+                                        <button name="action" class="btn btn-danger dropdown-item" type="submit" value="close">
                                             <i class="fas fa-door-closed text-danger mr-2"></i>Log out
                                         </button>
                                     </form>
