@@ -50,7 +50,9 @@
                 if ($module == "cart") {
                     include_once "cart.php";
                 }
-
+                if ($module == "delivery") {
+                    include_once "delivery.php";
+                }
                 ?>
             </div>
         </div>

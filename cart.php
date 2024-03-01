@@ -12,3 +12,5 @@
     <tbody>
     </tbody>
 </table>
+<a class="btn btn-warning" href="index.php?module=products" role="button">Go to products</a>
+<a class="btn btn-primary float-right" href="index.php?module=delivery" role="button">Go to Delivery</a>

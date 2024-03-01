@@ -182,4 +182,26 @@ $(document).ready(function () {
       },
     });
   });
+
+
+
+  var nameRec = $("#nameRec").val();
+  var emailRec = $("#emailRec").val();
+  var addressRec = $("#addressRec").val();
+  $("#push").click(function (e) {
+    var nameCli = $("#nameCli").val();
+    var emailCli = $("#emailCli").val();
+    var addressCli = $("#addressCli").val();
+
+    if ($(this).prop("checked") == true) {
+      $("#nameRec").val(nameCli);
+      $("#emailRec").val(emailCli);
+      $("#addressRec").val(addressCli);
+    } else {
+      $("#nameRec").val(nameRec);
+      $("#emailRec").val(emailRec);
+      $("#addressRec").val(addressRec);
+    }
+  });
+
 });
