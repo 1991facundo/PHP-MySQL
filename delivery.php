@@ -10,7 +10,7 @@ if (isset($_SESSION['idClient'])) {
 
         $nameRec=$_REQUEST['nameRec']??'';
         $emailRec=$_REQUEST['emailRec']??'';
-        $addressRec=$_REQUEST['addressRec']??'';
+        $addressRec=$_REQUEST['addressRec']??''; 
         $queryRec="INSERT INTO recives (name,email,address,idCli) VALUES ('$nameRec','$emailRec','$$addressRec','".$_SESSION['idClient']."')
         ON DUPLICATE KEY UPDATE
         name='$nameRec',email='$emailRec',address='$addressRec'; ";
@@ -19,7 +19,7 @@ if (isset($_SESSION['idClient'])) {
             echo '<meta http-equiv="refresh" content="0; url=index.php?module=paymentGateway" />';
         }
         else{
-        ?>
+        ?> 
             <div class="alert alert-danger" role="alert">
                 Error
             </div>

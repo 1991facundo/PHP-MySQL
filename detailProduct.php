@@ -4,7 +4,8 @@ $queryProduct = "SELECT id,name,price,quantity FROM products where id='$id';  ";
 $resProduct = mysqli_query($con, $queryProduct);
 $rowProduct = mysqli_fetch_assoc($resProduct);
 
-$fmt = new NumberFormatter('es_ES', NumberFormatter::CURRENCY);
+echo '€' . number_format($rowProduct['price'], 2, ',', '.');
+
 ?>
 
 <!-- Default box -->
@@ -51,10 +52,9 @@ $fmt = new NumberFormatter('es_ES', NumberFormatter::CURRENCY);
 
 
                 <div class="bg-gray py-2 px-3 mt-4">
-                    <h2 class="mb-0">
-                        <?php echo $fmt->formatCurrency($rowProduct['price'], 'EUR');
-                        ?>
-                    </h2>
+                <h2 class="mb-0">
+    <?php echo '€' . number_format($rowProduct['price'], 2, ',', '.'); ?>
+</h2>
 
                 </div>
                 <div class="mt-4">

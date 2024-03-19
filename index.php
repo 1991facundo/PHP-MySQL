@@ -53,8 +53,8 @@
                 if ($module == "delivery") {
                     include_once "delivery.php";
                 }
-                if( $modulo=="pasarela" ){
-                    include_once "pasarela.php";
+                if( $module=="gateway" ){
+                    include_once "gateway.php";
                 }
                 ?>
             </div>
